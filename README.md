@@ -1,5 +1,5 @@
 > "Há uma diferença entre conhecer o caminho… e caminhar pelo caminho."  
-> — Morpheus (provavelmente depois de criar o perfil dele no Linkonator)
+> — Morpheus
 
 O LINKONATOR é um clone gerenciador de links estiloso.
 
