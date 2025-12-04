@@ -19,7 +19,7 @@ O LINKONATOR é um clone gerenciador de links estiloso, com player de música in
 
 | Camada       | Tecnologia                          | Motivo                                      |
 |--------------|-------------------------------------|---------------------------------------------|
-| Frontend     | Astro 4 + HTMX + Alpine.js          | Build zero-JS, ilhas interativas, rápido    |
+| Frontend     | Astro 4 + HTMX          | Build zero-JS, ilhas interativas, rápido    |
 | Backend      | Crystal + Amyrist      | Velocidade insana + sintaxe limpa           |
 | Banco        | PostgreSQL (prod)    | Simples e performático                      |
 | Auth         | JWT + BCrypt (cost 10)              | Seguro e com patch $2a$ → $2y$ secreto      |
