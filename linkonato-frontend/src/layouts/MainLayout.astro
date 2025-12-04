@@ -1,0 +1,157 @@
+---
+// src/layouts/BaseLayout.astro
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+      main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        position: relative;
+        z-index: 5;
+      }
+      
+    </style>
+  </head>
+
+  <body>
+    <!-- Fundo com estrelas suaves -->
+    <div class="stars1"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+    <div class="matrix-rain" id="matrix"></div>
+
+    <!-- Tela CRT completa -->
+    <div class="crt glitch">
+
+      <header class="text-center">
+        <h1 class="text-6xl tracking-wider glow">LINKONATOR</h1>
+        <p class="text-2xl mt-2 opacity-80 glow"> Colete seus links</p>
+      </header>
+
+      <main>
+        <div class="max-w-4xl w-full">
+          <slot />
+        </div>
+      </main>
+
+      <footer class="text-center text-xl glow">
+        <p> © 2025 LINKONATOR v9.9</p>
+      </footer>
+    </div>
+
+    <script>
+      setInterval(() => {
+        if (Math.random() > 0.95) {
+          const doc : any = document;
+          doc.querySelector('.crt').style.transform = 'translate(3px, -3px)';
+          setTimeout(() => {
+            doc.querySelector('.crt').style.transform = '';
+          }, 80);
+        }
+      }, 2000);
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const count = window.innerWidth < 768 ? 50 : 100; // menos em mobile
+
+        for (let i = 0; i < count; i++) {
+          const star = document.createElement("div");
+          star.className = "twinkle";
+
+          const size = Math.random() * 3 + 1;
+          star.style.width = `${size}px`;
+          star.style.height = `${size}px`;
+          star.style.left = `${Math.random() * 100}vw`;
+          star.style.top = `${Math.random() * 100}vh`;
+
+          const duration = Math.random() * 5 + 3;
+          const delay = Math.random() * 5;
+          star.style.animation = `twinkle ${duration}s infinite ${delay}s`;
+
+          document.body.appendChild(star);
+        }
+
+          const matrix = document.getElementById("matrix");
+          const fakeLinks = [
+            "http://192.168.0.666/admin",
+            "https://deepnet.onion/linkonator_v9",
+            "ftp://anon:pass@darkserver.ru/secret",
+            "http://localhost:1337/debug",
+            "https://neuralink.gov.br/experiment/07",
+            "file:///C:/Windows/System32/linkonator.exe",
+            "http://intranet.corpo.gov/employees/007",
+            "https://mega.nz/folder/XxXxXxXx#linkonator2025",
+            "http://10.0.0.13:8080/root",
+            "ssh root@45.77.21.99 -p 2222",
+            "https://vault.linkonator.zer0/day9",
+            "http://satelite-7.mil.br/transmissao",
+            "telnet bbs.oldnet.org 23",
+            "gopher://gopher.linkonator.club/1",
+            "http://127.0.0.1:3000/devtools",
+            "https://pastebin.com/raw/h4x0r2025",
+            "http://torproject.org/download/linkonator",
+            "steam://connect/45.32.123.88:27015",
+            "magnet:?xt=urn:btih:linkonator1337",
+            "http://nsa.gov/monitor/usuario/brasil-42",
+            "https://github.com/x/linkonator-private",
+            "discord.gg/linkonator-underground",
+            "http://matrix.hasYou.neo"
+          ];
+
+          const createChar = () => {
+            const el = document.createElement("div");
+            el.className = "char2";
+            el.textContent = fakeLinks[Math.floor(Math.random() * fakeLinks.length)];
+
+            el.style.left = (Math.random() * 100 - 20)  + "vw";
+            el.style.top  = Math.random() * 100 + "vh";
+            el.style.position = "fixed"
+            el.style.color = "rgba(255, 255, 255, 0.044)";
+
+            const duration = Math.random() * 6 + 3;
+            const delay = Math.random() * 5;
+            el.style.animation = `appear ${duration}s linear ${delay}s infinite`;
+
+            if (matrix) matrix.appendChild(el);
+
+            setTimeout(() => el.remove(), 15000);
+          };
+
+          const total = window.innerWidth < 768 ? 10 : 20;
+          for (let i = 0; i < total; i++) {
+            setTimeout(createChar, i * 120);
+          }
+
+          setInterval(() => {
+            if (document.hidden) return;
+            createChar();
+          }, 800);
+      });
+    </script>
+  </body>
+</html>

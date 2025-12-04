@@ -1,0 +1,179 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+export const prerender = false;
+
+const sess = Astro.session;
+if (!sess) return Astro.redirect("/");
+
+const userData = await sess.get("user");
+if (!userData?.token) return Astro.redirect("/");
+
+const token = userData.token;
+
+let links = [];
+try {
+  const res = await fetch("http://localhost:3000/api/me", {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (res.ok) {
+    const data = await res.json();
+    links = data.links || [];
+  }
+} catch (e) {
+  return Astro.redirect("/");
+}
+
+const me = userData;
+const pageUrl = `http://localhost:4321/u/${me.username || "pozzi"}`;
+
+---
+
+<MainLayout title="Dashboard — Meus Links">
+  <div class="max-w-2x2 mx-auto mt-10 px-6">
+    <div class="bg-semi-white rounded-xl shadow-lg p-8">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-3xl font-bold">Olá!</h1>
+          <p class="text-gray-400">
+            Sua página:
+            <a href={pageUrl} target="_blank" class="text-blue-600 underline font-medium">
+              {pageUrl}
+            </a>
+          </p>
+        </div>
+        <a href="/logout" class="text-red-600 hover:underline font-medium">Sair</a>
+      </div>
+
+      <!-- Formulário Astro puro -->
+      <form id="addLinkForm" class="flex gap-3 mb-8">
+        <input 
+          type="text" 
+          name="title" 
+          placeholder="Título (ex: Instagram)" 
+          required 
+          class="flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+        />
+        <input 
+          type="url" 
+          name="url" 
+          placeholder="https://..." 
+          required 
+          class="flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+        />
+        <button 
+          type="submit"
+          class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition font-medium"
+        >
+          + Adicionar
+        </button>
+      </form>
+
+      <div id="message" class="mb-4 text-center font-medium"></div>
+
+      <div id="links-list" class="space-y-4">
+        {links.length === 0 ? (
+          <p class="text-gray-500 text-center py-8">Nenhum link ainda. Adicione o primeiro!</p>
+        ) : (
+          links.map((link: any) => (
+            <div 
+              class="bg-gray-50 bg-semi-white p-5 rounded-lg flex items-center justify-between group cursor-move select-none transition hover:shadow-md"
+              data-id={link.id}
+            >
+              <div class="flex items-center gap-4">
+                <span class="text-2xl text-gray-400 select-none">⋮⋮</span>
+                <div>
+                  <div class="font-semibold">{link.title}</div>
+                  <a href={link.url} target="_blank" class="text-mm text-blue-600 hover:underline break-all">
+                    {link.url}
+                  </a>
+                </a>
+                </div>
+              </div>
+              <button 
+                type="button"
+                class="opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-700 font-medium"
+                onclick={`deleteLink(${link.id})`}
+              >
+                Remover
+              </button></div>
+          ))
+        )}
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{token}}>
+    const messageEl = document.getElementById('message');
+    const listEl = document.getElementById('links-list');
+
+    document.getElementById('addLinkForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const title = form.title.value;
+      const url = form.url.value;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/links', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ title, url })
+        });
+
+        if (res.ok) {
+          const newLink = await res.json();
+          addLinkToList(newLink);
+          form.reset();
+          messageEl.innerHTML = '<span class="text-green-600">Link adicionado!</span>';
+        } else {
+          messageEl.innerHTML = '<span class="text-red-600">Erro ao adicionar</span>';
+        }
+      } catch (err) {
+        messageEl.innerHTML = '<span class="text-red-600">Erro de conexão</span>';
+      }
+    });
+
+    // Deletar link
+    window.deleteLink = async (id) => {
+      if (!confirm('Tem certeza?')) return;
+
+      try {
+        const res = await fetch(`http://localhost:3000/api/links/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (res.ok) {
+          document.querySelector(`[data-id="${id}"]`).remove();
+          messageEl.innerHTML = '<span class="text-green-600">Link removido!</span>';
+        }
+      } catch (err) {
+        messageEl.innerHTML = '<span class="text-red-600">Erro ao remover</span>';
+      }
+    };
+
+    function addLinkToList(link) {
+      const div = document.createElement('div');
+      div.className = 'bg-semi-white p-5 rounded-lg flex items-center justify-between group cursor-move select-none transition hover:shadow-md';
+      div.dataset.id = link.id;
+      div.innerHTML = `
+        <div class="flex items-center gap-4">
+          <span class="text-2xl text-gray-400 select-none">⋮⋮</span>
+          <div>
+            <div class="font-semibold">${link.title}</div>
+            <a href="${link.url}" target="_blank" class="text-sm text-blue-600 hover:underline break-all">
+              ${link.url}
+            </a>
+          </div>
+        </div>
+        <button type="button" class="opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-700 font-medium" onclick="deleteLink(${link.id})">
+          Remover
+        </button>
+      `;
+      listEl.appendChild(div);
+    }
+
+  </script>
+</MainLayout>

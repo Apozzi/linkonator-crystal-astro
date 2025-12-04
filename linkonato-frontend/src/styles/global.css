@@ -1,0 +1,138 @@
+
+@import "tailwindcss";
+
+
+.bg-semi-white {
+    background: #ffffff0f;
+}
+
+:root {
+    --crt-green: rgb(253, 250, 250);
+    --crt-cyan: #00f0ff;
+    --bg: rgb(26, 25, 25);
+}
+
+body {
+    background: var(--bg);
+    color: var(--crt-green);
+    font-family: 'VT323', monospace;
+    font-size: 1.6rem;
+    overflow: hidden;
+    height: 100vh;
+    box-shadow: 10px 10px 129px black inset;
+}
+
+.crt {
+
+    inset: 0;
+    background: var(--bg);
+    overflow: hidden;
+    flex-direction: column;
+    position: relative;
+    top: 0;
+    min-height:100vh
+    }
+
+    /* Scanlines + curvatura da tela */
+    .crt::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.08),
+        rgba(0,0,0,0.08) 8px,
+        transparent 8px,
+        transparent 10px
+    );
+    pointer-events: none;
+    z-index: 10;
+    mix-blend-mode: overlay;
+    }
+
+      header, footer {
+        backdrop-filter: blur(4px);
+        padding: 1.5rem 2rem;
+        z-index: 20;
+      }
+
+
+    .stars1, .stars2, .stars3 {
+        position: fixed;
+        inset: 0;
+        background-repeat: repeat;
+        pointer-events: none;
+        z-index: -2;
+      }
+
+      .stars1 {
+        background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                          radial-gradient(2px 2px at 90px 80px, #fff, transparent),
+                          radial-gradient(1px 1px at 50px 10px, #fff, transparent);
+        background-size: 200px 200px;
+        animation: drift 250s linear infinite;
+      }
+
+      .stars2 {
+        background-image: radial-gradient(2px 2px at 40px 70px, #ccc, transparent),
+                          radial-gradient(2px 2px at 10px 120px, #ddd, transparent);
+        background-size: 300px 300px;
+        animation: drift 400s linear infinite;
+        opacity: 0.6;
+      }
+
+      .stars3 {
+        background-image: radial-gradient(1px 1px at 80px 40px, #fff, transparent),
+                          radial-gradient(1px 1px at 120px 100px, #fff, transparent);
+        background-size: 400px 400px;
+        animation: drift 550s linear infinite;
+        opacity: 0.4;
+      }
+
+      .twinkle {
+        position: fixed;
+        background: white;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1;
+        animation: twinkle linear infinite;
+      }
+
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+        50%      { opacity: 1;   transform: scale(1.3); }
+      }
+
+      @keyframes drift {
+        from { background-position: 0 0; }
+        to   { background-position: -1000px -1000px; }
+      }
+
+      .matrix-rain {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 5;
+        overflow: hidden;
+      }
+
+      @keyframes appear {
+        0%   { opacity: 0;    transform: translateY(-20px) scale(0.8); }
+        10%  { opacity: 1;    transform: translateY(0) scale(1); }
+        80%  { opacity: 1;    transform: translateY(0) scale(1); }
+        100% { opacity: 0;    transform: translateY(20px) scale(0.8); }
+      }
+
+
+      #links-list {
+            overflow: auto;
+            height: 437px;
+      }
+
+      .public-layout {
+        height: auto;
+        overflow: auto;
+        margin: 43px;
+      }

@@ -1,0 +1,27 @@
+name: linkonato
+version: 0.1.0
+
+authors:
+  - Pozzi <eanderea1@gmail.com>
+
+targets:
+  linkonato:
+    main: src/linkonato.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+  granite:
+    github: amberframework/granite
+    version: ~> 0.23.4
+
+  pg:
+    github: will/crystal-pg
+
+  jwt:
+    github: crystal-community/jwt
+
+crystal: '>= 1.18.2'
+
+license: MIT

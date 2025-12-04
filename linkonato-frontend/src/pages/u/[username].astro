@@ -1,0 +1,51 @@
+---
+// src/pages/u/[username].astro
+import PublicLayout from '../../layouts/PublicLayout.astro';
+
+const { username } = Astro.params;
+
+const res = await fetch(`http://localhost:3000/api/users/${username}`);
+if (!res.ok) {
+  return Astro.redirect('/404');
+}
+const { user, links } = await res.json();
+
+---
+
+<PublicLayout title={`@${user.username}`}>
+  <div class="max-w-md mx-auto mt-2 px-6">
+    <div class="text-center mb-10">
+      {user.avatar && <img src={user.avatar} class="w-32 h-32 rounded-full mx-auto" />}
+      <h1 class="text-4xl font-bold mt-6">@{user.username}</h1>
+      {user.bio && <p class="text-gray-600 mt-3">{user.bio}</p>}
+    </div>
+
+    <div class="space-y-4">
+      {links.map((link: any) => (
+        <a 
+          href={link.url} 
+          target="_blank"
+          class="block bg-semi-white hover:bg-gray-100 transition shadow-md rounded-xl p-5 text-center font-larger "
+        >
+          {link.title}
+        </a>
+      ))}
+
+      {
+        username === "pozzi" ? <div>
+              <script src="https://elfsightcdn.com/platform.js" async></script>
+              <div class="elfsight-app-6969428e-5f93-4670-b06a-7c7a77ed0090" data-elfsight-app-lazy></div>
+
+              <div>
+                <img src="https://cdna.artstation.com/p/assets/images/images/065/333/092/large/kayra-lacivert-afsar-eva-kucuk-dokunuslar1.jpg?1690121412">
+
+            
+             
+              </div>
+        </div> : null
+      }
+    </div>
+    
+  </div>
+</PublicLayout>
+

@@ -1,0 +1,70 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+export const prerender = false;
+
+const sess = Astro.session;
+if (sess) {
+  const userData = await sess.get("user");
+  if (!!userData) return Astro.redirect("/dashboard");
+}
+---
+
+<MainLayout title="Login - Meus Links">
+  <div class="flex items-center justify-center ">
+    <div class="bg-semi-white p-10 rounded-xl shadow-xl w-full max-w-md">
+      <h1 class="text-6xl font-bold text-center mb-8 glow">Linkonator</h1>
+
+      <form id="loginForm" class="space-y-6">
+        <input type="email" id="email" placeholder="Email" required class="w-full px-4 py-3 border rounded-lg" />
+        <input type="password" id="password" placeholder="Senha" required class="w-full px-4 py-3 border rounded-lg" />
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+          Entrar
+        </button>
+      </form>
+
+      <div id="message" class="mt-4 text-center font-medium"></div>
+      
+    </div>
+  </div>
+
+  <script>
+    const doc :any = document;
+    const loginForm: any = document.getElementById('loginForm');
+    const msg: any = document.getElementById('message');
+
+    loginForm.addEventListener('submit', async (e: any) => {
+      e.preventDefault();
+
+      const email = doc.getElementById('email').value;
+      const password = doc.getElementById('password').value;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          msg.innerHTML = `<span class="text-red-600">${data.error || 'Erro ao logar'}</span>`;
+          return;
+        }
+
+        const callback = await fetch('/auth/callback', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        });
+
+        if (callback.redirected) {
+          window.location.href = callback.url;
+        }
+
+      } catch (e) {
+        msg.innerHTML = `<span class="text-red-600">Erro de conexão</span>`;
+      }
+    });
+  </script>
+</MainLayout>
