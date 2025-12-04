@@ -15,7 +15,7 @@ O LINKONATOR é um clone gerenciador de links estiloso.
 
 ## Funcionalidades
 
-## Tech Stack (pílula vermelha completa)
+## Tech Stack
 
 | Camada       | Tecnologia                          | Motivo                                      |
 |--------------|-------------------------------------|---------------------------------------------|
