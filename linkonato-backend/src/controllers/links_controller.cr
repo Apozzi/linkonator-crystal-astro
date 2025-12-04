@@ -1,3 +1,22 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║  █░░ █ █▄▀ █▄▀ █▀ █▀ █ █▀█ █▀▀ █▀█ █▀█ ▄▀█ █▀▀ █▀▀ █▀█ █▀█ ║
+# ║  █▄▄ █ █░█ █░█ ░█ ▄█ █ █▄█ ██▄ █▀▄ █▀▄ █▀█ █▄█ ██▄ █▄█ █▄█ ║
+# ║                                                                  ║
+# ║   Módulo de Coleta Neural de Links — Sub-rede LINKONATOR         ║
+# ║   "Os links não estão aí fora. Eles estão dentro de você."      ║
+# ║                                                                  ║
+# ║  • /api/me      → Despeja o perfil do agente + todos os          ║
+# ║                    portais (links) que ele já descobriu          ║
+# ║  • /api/links   → Abre um novo buraco no tecido da realidade     ║
+# ║                    (cria link com posição automática)           ║
+# ║  • DELETE /api/links/:id → Apaga o portal permanentemente.      ║
+# ║                    Sem volta. Nem o Oracle consegue recuperar.  ║
+# ║                                                                  ║
+# ║   Segurança nível Zion: só o dono do link pode destruí-lo.       ║
+# ║   Tentou invadir outro agente? 403 direto pro deserto real.     ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+
 get "/api/me" do |env|
   user = env.get("current_user").as(User)
   links = UserLink.where(user_id: user.id).order(position: :asc)
