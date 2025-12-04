@@ -1,3 +1,23 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║                  █░░ █ █▄░█ █▄▀ █▀█ █▄█ ▄▀█ ▀█▀ █▀█ █▀█ ║
+# ║                  █▄▄ █ █░▀█ █░█ █▄█ ░█░ █▀█ ░█░ █▄█ █▀▄ ║
+# ║                                                              ║
+# ║  Bem-vindo ao núcleo de autenticação do Linkonator v9.9      ║
+# ║  Aqui nascem os agentes que vão coletar links pelo abyss.   ║
+# ║                                                              ║
+# ║  • Senhas são trituradas com BCrypt (cost 10) e jogadas     ║
+# ║    direto no vault criptográfico — nem o próprio Neo        ║
+# ║    conseguiria ler sem a pílula vermelha.                   ║
+# ║  • Tokens JWT com 7 dias de expiração, porque até no        ║
+# ║    submundo digital a gente precisa dormir algum dia.      ║
+# ║  • Patch secreto aplicado: converte $2a$ → $2y$ porque       ║
+# ║    algumas libs antigas ainda vivem no passado.             ║
+# ║                                                              ║
+# ║  "Há uma diferença entre conhecer o caminho                 ║
+# ║   e caminhar pelo caminho." — Morpheus (provavelmente)      ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+
 require "crypto/bcrypt"
 
 post "/api/auth/register" do |env|
