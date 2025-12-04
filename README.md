@@ -7,7 +7,14 @@ O LINKONATOR é um clone gerenciador de links estiloso, com player de música in
 
 <div align="center">
   <img src="screenshots/linkonato1.png" alt="Tela inicial desktop" />
+
+  +++++++++
+
+  
   <img src="screenshots/linkonato2.png" alt="Modo escuro + chuva matrix" />
+
+  +++++++++
+   
   <img src="screenshots/linkonato3.png" alt="Mobile + glitch ativo" />
 </div>
 
