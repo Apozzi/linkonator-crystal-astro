@@ -1,7 +1,7 @@
 > "Há uma diferença entre conhecer o caminho… e caminhar pelo caminho."  
 > — Morpheus
 
-O LINKONATOR é um clone gerenciador de links estiloso.
+O LINKONATOR é um clone gerenciador de links estiloso, com player de música integrado.
 
 ## Preview
 
