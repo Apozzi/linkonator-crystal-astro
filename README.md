@@ -46,7 +46,7 @@ cd linkonator
 # 2. Backend (Crystal)
 cd backend
 shards install
-crystal run src/linkonato.cr
+crystal run src/linkonato.cr 
 # → roda em http://localhost:3000
 
 # 3. Frontend (Astro) - em outro terminal
