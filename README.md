@@ -32,25 +32,23 @@ O LINKONATOR é um clone gerenciador de links estiloso, com player de música in
 ## Como rodar localmente
 
 ### Pré-requisitos
-- Crystal 1.10+
-- Node.js 18+
-- shard.yml e package.json já estão no repo
+- Docker
+- Docker Compose
 
 ### Passo a passo
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/seuusuario/linkonator.git
-cd linkonator
+git clone https://github.com/seuusuario/linkonator-crystal-astro.git
+cd linkonator-crystal-astro
 
-# 2. Backend (Crystal)
-cd backend
-shards install
-crystal run src/linkonato.cr 
-# → roda em http://localhost:3000
+# 2. Crie ou configure o arquivo .env no backend caso necessário
+# cp ./linkonato-backend/.env.example ./linkonato-backend/.env
 
-# 3. Frontend (Astro) - em outro terminal
-cd ../frontend
-npm install
-npm run dev
-# → roda em http://localhost:4321
+# 3. Inicie a aplicação com Docker Compose
+docker compose up -d --build
+
+# Prontinho! 🚀
+# → Frontend roda em: http://localhost:4321
+# → Backend roda em: http://localhost:3005
+
