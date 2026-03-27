@@ -42,7 +42,7 @@ O LINKONATOR é um clone gerenciador de links estiloso, com player de música in
 git clone https://github.com/seuusuario/linkonator-crystal-astro.git
 cd linkonator-crystal-astro
 
-# 2. Crie ou configure o arquivo .env no backend caso necessário
+# 2. Crie ou configure o arquivo .env
 # cp ./linkonato-backend/.env.example ./linkonato-backend/.env
 
 # 3. Inicie a aplicação com Docker Compose
