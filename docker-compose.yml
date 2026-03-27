@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: linkonato
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: linkonato
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/postgresql/data
+
+  frontend:
+    build:
+      context: ./linkonato-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./linkonato-frontend:/app
+      - /app/node_modules
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./linkonato-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3000"
+    env_file:
+      - ./linkonato-backend/.env
+    environment:
+      - DATABASE_URL=postgres://linkonato:password@db:5432/linkonato
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

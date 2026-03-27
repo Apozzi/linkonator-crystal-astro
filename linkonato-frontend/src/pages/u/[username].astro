@@ -4,7 +4,7 @@ import PublicLayout from '../../layouts/PublicLayout.astro';
 
 const { username } = Astro.params;
 
-const res = await fetch(`http://localhost:3000/api/users/${username}`);
+const res = await fetch(`http://backend:3000/api/users/${username}`);
 if (!res.ok) {
   return Astro.redirect('/404');
 }
@@ -13,24 +13,26 @@ const { user, links } = await res.json();
 ---
 
 <PublicLayout title={`@${user.username}`}>
-  <div class="max-w-md mx-auto mt-2 px-6">
+  <div class="max-w-md md:max-w-3xl w-full mx-auto mt-2 px-6">
     <div class="text-center mb-10">
       {user.avatar && <img src={user.avatar} class="w-32 h-32 rounded-full mx-auto" />}
       <h1 class="text-4xl font-bold mt-6">@{user.username}</h1>
       {user.bio && <p class="text-gray-600 mt-3">{user.bio}</p>}
     </div>
 
-    <div class="space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
       {links.map((link: any) => (
         <a 
           href={link.url} 
           target="_blank"
-          class="block bg-semi-white hover:bg-gray-100 transition shadow-md rounded-xl p-5 text-center font-larger "
+          class="flex items-center justify-center bg-semi-white hover:bg-gray-100 transition shadow-md rounded-xl p-5 text-center font-larger"
         >
           {link.title}
         </a>
       ))}
+    </div>
 
+    <div class="space-y-4">
       {
         username === "pozzi" ? <div>
               <script src="https://elfsightcdn.com/platform.js" async></script>
@@ -38,9 +40,6 @@ const { user, links } = await res.json();
 
               <div>
                 <img src="https://cdna.artstation.com/p/assets/images/images/065/333/092/large/kayra-lacivert-afsar-eva-kucuk-dokunuslar1.jpg?1690121412">
-
-            
-             
               </div>
         </div> : null
       }

@@ -1,15 +1,15 @@
-const doc :any = document;
-const loginForm: any = document.getElementById('loginForm');
-const msg: any = document.getElementById('message');
+const doc = document;
+const loginForm = document.getElementById('loginForm');
+const msg = document.getElementById('message');
 
-loginForm.addEventListener('submit', async (e: any) => {
+loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const email = doc.getElementById('email').value;
   const password = doc.getElementById('password').value;
 
   try {
-    const res = await fetch('http://localhost:3000/api/auth/login', {
+    const res = await fetch('http://localhost:3005/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })

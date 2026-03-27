@@ -12,7 +12,7 @@ const token = userData.token;
 
 let links = [];
 try {
-  const res = await fetch("http://localhost:3000/api/me", {
+  const res = await fetch("http://backend:3000/api/me", {
     headers: { Authorization: `Bearer ${token}` }
   });
   if (res.ok) {
@@ -102,5 +102,5 @@ const pageUrl = `http://localhost:4321/u/${me.username || "pozzi"}`;
     </div>
   </div>
 
-  <script type="module" define:vars={{token}} src="/src/dashboard.js" defer></script>
+  <script type="module" define:vars={{token}} src="/src/scripts/dashboard.js" defer></script>
 </MainLayout>

@@ -1,6 +1,6 @@
 setInterval(() => {
   if (Math.random() > 0.95) {
-    const doc : any = document;
+    const doc = document;
     doc.querySelector('.crt').style.transform = 'translate(3px, -3px)';
     setTimeout(() => {
       doc.querySelector('.crt').style.transform = '';

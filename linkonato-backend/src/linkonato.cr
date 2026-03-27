@@ -3,6 +3,7 @@ require "kemal"
 require "./config/database"
 require "./models/user"
 require "./models/user_link"
+require "./config/seed"
 require "./middlewares/auth_middleware"
 require "./controllers/*"
 

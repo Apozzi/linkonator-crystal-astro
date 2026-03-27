@@ -8,7 +8,7 @@ document.getElementById('addLinkForm').addEventListener('submit', async (e) => {
   const url = form.url.value;
 
   try {
-    const res = await fetch('http://localhost:3000/api/links', {
+    const res = await fetch('http://localhost:3005/api/links', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ window.deleteLink = async (id) => {
   if (!confirm('Tem certeza?')) return;
 
   try {
-    const res = await fetch(`http://localhost:3000/api/links/${id}`, {
+    const res = await fetch(`http://localhost:3005/api/links/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
