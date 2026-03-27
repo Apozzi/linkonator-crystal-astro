@@ -43,7 +43,6 @@ git clone https://github.com/seuusuario/linkonator-crystal-astro.git
 cd linkonator-crystal-astro
 
 # 2. Crie ou configure o arquivo .env
-# cp ./linkonato-backend/.env.example ./linkonato-backend/.env
 
 # 3. Inicie a aplicação com Docker Compose
 docker compose up -d --build
