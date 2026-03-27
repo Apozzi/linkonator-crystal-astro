@@ -48,7 +48,6 @@ cd linkonator-crystal-astro
 # 3. Inicie a aplicação com Docker Compose
 docker compose up -d --build
 
-# Prontinho! 🚀
 # → Frontend roda em: http://localhost:4321
 # → Backend roda em: http://localhost:3005
 
